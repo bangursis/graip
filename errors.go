@@ -12,5 +12,5 @@ var (
 )
 
 func formatErr(errName error, jobName string, err error) error {
-	fmt.Errorf("Error:%e, Job Name:%s, Description: %e", HTTPGetError, jobName, err)
+	return fmt.Errorf("Error:%e, Job Name:%s, Description: %e", HTTPGetError, jobName, err)
 }

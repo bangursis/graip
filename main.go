@@ -7,13 +7,15 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
+
+	"github.com/gookit/validate"
 )
 
 type Job struct {
-	Name     string `json:"name"`
-	Resource string `json:"resource"`
-	Period   int    `json:"schedule_every_X_minutes"`
-	SaveTo   string `json:"save_to"`
+	Name     string `json:"name" validate:"required"`
+	Resource string `json:"resource" validate:"required|url"`
+	Period   int    `json:"schedule_every_X_minutes" validate:"required"`
+	SaveTo   string `json:"save_to" validate:"required"`
 }
 
 var jobs []Job
@@ -32,6 +34,14 @@ func init() {
 
 	if err := json.Unmarshal(data, &jobs); err != nil {
 		panic(err)
+	}
+
+	for i := range jobs {
+		v := validate.Struct(&jobs[i])
+
+		if !v.Validate() {
+			panic(v.Errors)
+		}
 	}
 }
 
