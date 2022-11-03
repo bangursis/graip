@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func runner(qCh <-chan struct{}, errCh chan<- error, j Job) {
+func runner(qCh <-chan struct{}, errCh chan<- error, j *Job) {
 	for {
 		select {
 		case <-time.Tick(time.Duration(j.Period) * time.Minute):

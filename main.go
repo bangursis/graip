@@ -52,7 +52,7 @@ func main() {
 	qCh, errCh := make(chan struct{}), make(chan error)
 	for _, j := range jobs {
 		os.Create(j.SaveTo)
-		go runner(qCh, errCh, j)
+		go runner(qCh, errCh, &j)
 	}
 
 	for {
